@@ -14,7 +14,7 @@ public class Main extends Application {
         primaryStage.setTitle("Team Building Tool");
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("mainGUI.fxml"));
-        primaryStage.setScene(new Scene(root, 900, 500));
+        primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
     }
 
