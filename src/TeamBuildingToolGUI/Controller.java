@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,37 +21,39 @@ import javax.swing.text.TableView;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     private FileChooser fileChooser;
     private Division mainDivision;
-
     @FXML
-    private javafx.scene.control.TableView<TableModel> disTable;
+    private javafx.scene.control.TableView<Member> fullTable;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> DivisionID;
+    private javafx.scene.control.TableView<Member> disTable;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> TeamId;
+    private javafx.scene.control.TableColumn<Member, String> DivisionID;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> MemberID;
+    private javafx.scene.control.TableColumn<Member, String> TeamId;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> LastName;
+    private javafx.scene.control.TableColumn<Member, String> MemberID;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> MiddleName;
+    private javafx.scene.control.TableColumn<Member, String> LastName;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> FirstName;
+    private javafx.scene.control.TableColumn<Member, String> MiddleName;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> Conscientiousness;
+    private javafx.scene.control.TableColumn<Member, String> FirstName;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> Extraversion;
+    private javafx.scene.control.TableColumn<Member, String> Conscientiousness;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> Agreeableness;
+    private javafx.scene.control.TableColumn<Member, String> Extraversion;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> Openness;
+    private javafx.scene.control.TableColumn<Member, String> Agreeableness;
     @FXML
-    private javafx.scene.control.TableColumn<TableModel, String> Neuroticism;
+    private javafx.scene.control.TableColumn<Member, String> Openness;
+    @FXML
+    private javafx.scene.control.TableColumn<Member, String> Neuroticism;
 
     public void AddMembersFromCSVBtn(javafx.event.ActionEvent event) throws Exception{
         System.out.println("AddMembersFromCSVBtn Pressed");
@@ -61,13 +64,17 @@ public class Controller implements Initializable {
         file = fileChooser.showOpenDialog(new Stage());
         if (file!=null) {
             mainDivision.addMembersFromCSV(file.getAbsolutePath());
-            Member m;
-            for (int x = 0; x < 7; x++) {
-                m = mainDivision.getMembers().get(x);
-                disTable.getItems().add(new TableModel(m.getDivisionID(), m.getTeamID(), m.getMemberID(), m.getLastName(), m.getMiddleName(), m.getFirstName(), String.valueOf(m.getConscientiousness()), String.valueOf(m.getExtraversion()), String.valueOf(m.getAgreeableness()), String.valueOf(m.getOpenness()), String.valueOf(m.getNeuroticism())));
+            for (int x = mainDivision.getMembers().size()-7; x < mainDivision.getMembers().size(); x++) {
+                disTable.getItems().add(mainDivision.getMembers().get(x));
             }
         }
     }
+
+//    public void populateCurrentMemberList(ContextMenuEvent contextMenuEvent) {
+//        for (int x = 0; x < mainDivision.getMembers().size(); x++){
+//            fullTable.getItems().add(mainDivision.getMembers().get(x));
+//        }
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
@@ -83,20 +90,24 @@ public class Controller implements Initializable {
         Openness = new TableColumn("Openness");
         Neuroticism = new TableColumn("Neuroticism");
 
-        DivisionID.setCellValueFactory(new PropertyValueFactory<TableModel,String>("DivisionID"));
-        TeamId.setCellValueFactory(new PropertyValueFactory<TableModel,String>("TeamId"));
-        MemberID.setCellValueFactory(new PropertyValueFactory<TableModel,String>("MemberID"));
-        LastName.setCellValueFactory(new PropertyValueFactory<TableModel,String>("LastName"));
-        MiddleName.setCellValueFactory(new PropertyValueFactory<TableModel,String>("MiddleName"));
-        FirstName.setCellValueFactory(new PropertyValueFactory<TableModel,String>("FirstName"));
-        Conscientiousness.setCellValueFactory(new PropertyValueFactory<TableModel,String>("Conscientiousness"));
-        Extraversion.setCellValueFactory(new PropertyValueFactory<TableModel,String>("Extraversion"));
-        Agreeableness.setCellValueFactory(new PropertyValueFactory<TableModel,String>("Agreeableness"));
-        Openness.setCellValueFactory(new PropertyValueFactory<TableModel,String>("Openness"));
-        Neuroticism.setCellValueFactory(new PropertyValueFactory<TableModel,String>("Neuroticism"));
+        DivisionID.setCellValueFactory(new PropertyValueFactory<Member,String>("divisionID"));
+        TeamId.setCellValueFactory(new PropertyValueFactory<Member,String>("teamID"));
+        MemberID.setCellValueFactory(new PropertyValueFactory<Member,String>("MemberID"));
+        LastName.setCellValueFactory(new PropertyValueFactory<Member,String>("LastName"));
+        MiddleName.setCellValueFactory(new PropertyValueFactory<Member,String>("MiddleName"));
+        FirstName.setCellValueFactory(new PropertyValueFactory<Member,String>("FirstName"));
+        Conscientiousness.setCellValueFactory(new PropertyValueFactory<Member,String>("Conscientiousness"));
+        Extraversion.setCellValueFactory(new PropertyValueFactory<Member,String>("Extraversion"));
+        Agreeableness.setCellValueFactory(new PropertyValueFactory<Member,String>("Agreeableness"));
+        Openness.setCellValueFactory(new PropertyValueFactory<Member,String>("Openness"));
+        Neuroticism.setCellValueFactory(new PropertyValueFactory<Member,String>("Neuroticism"));
 
         disTable.getColumns().addAll(DivisionID, TeamId, MemberID, LastName, MiddleName, FirstName, Conscientiousness, Extraversion, Agreeableness, Openness, Neuroticism);
         disTable.setEditable(false);
+
+//        fullTable.getColumns().addAll(DivisionID, TeamId, MemberID, LastName, MiddleName, FirstName, Conscientiousness, Extraversion, Agreeableness, Openness, Neuroticism);
+//        fullTable.setEditable(true);
+
         mainDivision = new Division("0001");
     }
 }
