@@ -196,7 +196,7 @@ public class Member {
     }
 
     public String getFullname(){
-        return String.format("%s %s %s", this.firstName, this.middleName, this.lastName);
+        return String.format("%s %s %s", this.firstName.get(), this.middleName.get(), this.lastName.get());
     }
 
     public HashMap<String, Object> getMemberAsHashMap(){

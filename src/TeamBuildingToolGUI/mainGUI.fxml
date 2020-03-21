@@ -12,7 +12,7 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Accordion GridPane.rowIndex="1">
+       <Accordion GridPane.rowIndex="1" expandedPane="$addMembers">
         <panes>
             <TitledPane fx:id="addMembers" animated="false" prefHeight="508.0" prefWidth="855.0" text="Add Members">
                 <content>
