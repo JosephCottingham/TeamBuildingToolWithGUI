@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.ContextMenuEvent;
@@ -17,7 +18,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import javax.swing.text.TableView;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
@@ -27,7 +27,8 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     private FileChooser fileChooser;
-    private Division mainDivision;
+    private Division mainDivision = new Division("0001");
+
     @FXML
     private javafx.scene.control.TableView<Member> fullTable;
     @FXML
@@ -64,16 +65,33 @@ public class Controller implements Initializable {
         file = fileChooser.showOpenDialog(new Stage());
         if (file!=null) {
             mainDivision.addMembersFromCSV(file.getAbsolutePath());
-            for (int x = mainDivision.getMembers().size()-7; x < mainDivision.getMembers().size(); x++) {
-                disTable.getItems().add(mainDivision.getMembers().get(x));
+            disTable.getItems().removeAll(disTable.getItems());
+            for (Member m : mainDivision.getMembers()) System.out.println(m.getFullname());
+            if (mainDivision.getMembers().size()>7) {
+                for (int x = mainDivision.getMembers().size()-1; x > mainDivision.getMembers().size()-6; x--) {
+                    System.out.println(x);
+                    disTable.getItems().add(mainDivision.getMembers().get(x));
+                }
+            } else {
+                for (Member m : mainDivision.getMembers()) {
+                    disTable.getItems().add(m);
+                }
             }
+        }
+        fullTable.getItems().removeAll(fullTable.getItems());
+        for (Member m : mainDivision.getMembers()){
+            fullTable.getItems().add(m);
+//            currentMemberList.add(m);
         }
     }
 
 //    public void populateCurrentMemberList(ContextMenuEvent contextMenuEvent) {
-//        for (int x = 0; x < mainDivision.getMembers().size(); x++){
-//            fullTable.getItems().add(mainDivision.getMembers().get(x));
+//
+//        for (Member m : mainDivision.getMembers()){
+//            fullTable.getItems().add(m);
+////            currentMemberList.add(m);
 //        }
+////        fullTable.getItems().setAll(currentMemberList);
 //    }
 
     @Override
@@ -105,9 +123,7 @@ public class Controller implements Initializable {
         disTable.getColumns().addAll(DivisionID, TeamId, MemberID, LastName, MiddleName, FirstName, Conscientiousness, Extraversion, Agreeableness, Openness, Neuroticism);
         disTable.setEditable(false);
 
-//        fullTable.getColumns().addAll(DivisionID, TeamId, MemberID, LastName, MiddleName, FirstName, Conscientiousness, Extraversion, Agreeableness, Openness, Neuroticism);
-//        fullTable.setEditable(true);
-
-        mainDivision = new Division("0001");
+        fullTable.getColumns().addAll(DivisionID, TeamId, MemberID, LastName, MiddleName, FirstName, Conscientiousness, Extraversion, Agreeableness, Openness, Neuroticism);
+        fullTable.setEditable(true);
     }
 }
