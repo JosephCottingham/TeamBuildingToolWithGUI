@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TeamBuildingToolGUI.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Accordion GridPane.rowIndex="1" expandedPane="$addMembers">
+        <panes>
+            <TitledPane animated="false" prefHeight="508.0" prefWidth="855.0" text="Add Members" fx:id="addMembers">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="855.0">
+                        <children>
+                            <Button id="AddMembersFromCSV" layoutX="196.0" layoutY="14.0" mnemonicParsing="false" onAction="#AddMembersFromCSVBtn" prefHeight="50.0" prefWidth="444.0" text="Add Members From CSV" />
+                            <TableView fx:id="disTable" layoutX="13.0" layoutY="72.0" prefHeight="205.0" prefWidth="827.0">
+<!--                                <columns>-->
+<!--                                    <TableColumn fx:id="colDivisionID" prefWidth="64.0" text="DivisionID" />-->
+<!--                                    <TableColumn fx:id="colTeamId" prefWidth="65.0" text="TeamId" />-->
+<!--                                    <TableColumn fx:id="colMemberID" prefWidth="67.0" text="MemberID" />-->
+<!--                                    <TableColumn fx:id="colLastName" prefWidth="68.0" text="LastName" />-->
+<!--                                    <TableColumn fx:id="colMiddleName" text="MiddleName" />-->
+<!--                                    <TableColumn fx:id="colFirstName" prefWidth="65.0" text="FirstName" />-->
+<!--                                    <TableColumn fx:id="colConscientiousness" prefWidth="112.0" text="Conscientiousness" />-->
+<!--                                    <TableColumn fx:id="colExtraversion" prefWidth="79.0" text="Extraversion" />-->
+<!--                                    <TableColumn fx:id="colAgreeableness" prefWidth="75.0" text="Agreeableness" />-->
+<!--                                    <TableColumn fx:id="colOpenness" prefWidth="75.0" text="Openness" />-->
+<!--                                    <TableColumn fx:id="colNeuroticism" prefWidth="75.0" text="Neuroticism" />-->
+<!--                                </columns>-->
+                            </TableView>
+                            <TextField id="FirstName" layoutX="92.0" layoutY="302.0" promptText="First Name" />
+                            <TextField layoutX="561.0" layoutY="302.0" promptText="Lastname Name" />
+                            <TextField id="MiddleName" layoutX="327.0" layoutY="302.0" promptText="Middle Name" />
+                            <TextField id="MemberID" layoutX="92.0" layoutY="344.0" promptText="MemberID" />
+                            <TextField id="TeamID" layoutX="327.0" layoutY="344.0" promptText="TeamID" />
+                            <TextField id="DivisionID" layoutX="561.0" layoutY="344.0" promptText="DivisionID" />
+                            <TextField id="Openness" layoutX="92.0" layoutY="391.0" prefHeight="25.0" prefWidth="68.0" promptText="Openness" />
+                            <TextField id="Neuroticism" layoutX="200.0" layoutY="391.0" prefHeight="25.0" prefWidth="83.0" promptText="Neuroticism" />
+                            <TextField id="Conscientiousness" layoutX="344.0" layoutY="391.0" prefHeight="25.0" prefWidth="115.0" promptText="Conscientiousness" />
+                            <TextField id="Extraversion" layoutX="502.0" layoutY="391.0" prefHeight="25.0" prefWidth="79.0" promptText="Extraversion" />
+                            <TextField id="Agreeableness" layoutX="615.0" layoutY="391.0" prefHeight="25.0" prefWidth="95.0" promptText="Agreeableness" />
+                            <Label id="lab" layoutX="710.0" layoutY="31.0" text="Label" />
+                        </children>
+                    </AnchorPane>
+                </content>
+            </TitledPane>
+            <TitledPane animated="false" text="untitled 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="untitled 3">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</GridPane>
