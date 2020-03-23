@@ -3,11 +3,13 @@ package TeamBuildingToolGUI;
 import TeamBuildingTool.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,7 +20,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     private FileChooser fileChooser;
     private Division mainDivision = new Division("0001");
+    private boolean RadioButtonGroup = false;
 
     @FXML
     private javafx.scene.control.TableView<Member> fullTable;
@@ -55,6 +57,8 @@ public class Controller implements Initializable {
     private javafx.scene.control.TableColumn<Member, String> Openness;
     @FXML
     private javafx.scene.control.TableColumn<Member, String> Neuroticism;
+
+
 
     public void AddMembersFromCSVBtn(javafx.event.ActionEvent event) throws Exception{
         System.out.println("AddMembersFromCSVBtn Pressed");
@@ -125,5 +129,10 @@ public class Controller implements Initializable {
 
         fullTable.getColumns().addAll(DivisionID, TeamId, MemberID, LastName, MiddleName, FirstName, Conscientiousness, Extraversion, Agreeableness, Openness, Neuroticism);
         fullTable.setEditable(true);
+    }
+
+    public void RadioButtonGroup(ActionEvent actionEvent) {
+        if(actionEvent.getSource().toString().split("=")[1].split(",")[0].equals("radioDif")) RadioButtonGroup = false;
+        else RadioButtonGroup = true;
     }
 }
