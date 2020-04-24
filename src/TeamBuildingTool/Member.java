@@ -36,6 +36,11 @@ public class Member {
     public Member(String firstName, String lastName) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
+        this.openness = new SimpleIntegerProperty(0);
+        this.neuroticism = new SimpleIntegerProperty(0);
+        this.conscientiousness = new SimpleIntegerProperty(0);
+        this.extraversion = new SimpleIntegerProperty(0);
+        this.agreeableness = new SimpleIntegerProperty(0);
     }
 
     public Member() {
