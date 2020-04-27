@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TeamBuildingToolWithGUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TeamBuildingToolWithGUI_jar</output-path>
+    <root id="archive" name="TeamBuildingToolWithGUI.jar">
+      <element id="module-output" name="TeamBuildingToolWithGUI" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/charm-glisten-4.4.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

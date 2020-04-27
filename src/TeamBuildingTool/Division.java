@@ -10,6 +10,9 @@ public class Division {
     private String divisionID;
     private int teamSize, teamNum, extraMemberTeams;
 
+
+    // Constructors
+
     public Division(){
 
     }
@@ -42,6 +45,9 @@ public class Division {
         this.teamNum = teamNum;
     }
 
+
+    // Get/Set
+
     public ArrayList<Member> getMembers(){
         return members;
     }
@@ -70,6 +76,7 @@ public class Division {
         this.teamNum = teamNum;
     }
 
+    // return data of member with given ID
     public HashMap<String, Object> member(String memberId){
         for(int x = 0; x < teamNum; x++){
             Member tempMember = teamOfMembers.get(x).findMemberById(memberId);
@@ -101,6 +108,7 @@ public class Division {
     }
 
     public void group(boolean Simularity, boolean teamSize){
+        // Used to configure for grouping and directed to users designated function
         // if Simularity = true then group by Simularity otherwise Difference
         // if teamSize = true then grouping based on having a team size speifed, otherwise it is based on the number of teams
         if (teamSize) {
@@ -118,6 +126,7 @@ public class Division {
     }
 
     private void groupBySimularity() {
+        System.out.println("groupBySimularity");
         teamOfMembers = new ArrayList<Team>();
         SortByCenterDistance(); // reorder member list to allow for relative comparison
         ArrayList<Member> unallocatedMembers = (ArrayList<Member>) members.clone(); // create modifiable member list
@@ -159,6 +168,7 @@ public class Division {
     }
 
     private void groupByDifference() {
+        System.out.println("groupByDifference");
         teamOfMembers = new ArrayList<Team>();
         SortByCenterDistance(); // reorder member list to allow for relative comparison
         ArrayList<Member> unallocatedMembers = (ArrayList<Member>) members.clone(); // create modifiable member list
@@ -173,7 +183,6 @@ public class Division {
             // this prevents algorithm from group all outliers together and instead bases grouping on a member near the center allowing for a more equal distribution of members without addional runtime complexity
             tempTeam.addMember(unallocatedMembers.get(unallocatedMembers.size()-1));
             unallocatedMembers.remove(unallocatedMembers.size()-1); // removes the used member from the valid member list
-            System.out.println("Size" + unallocatedMembers.size());
             for (int y = 0; y < teamSize-1; y++){
                 if(unallocatedMembers.size()<=0) break; // checks if there are more members to add
                 int index = 0; // stores the index that member m is stored | lowers run time because no lookup algorithm
@@ -255,11 +264,12 @@ public class Division {
             System.out.print("\n");
         }
     }
-    public void addMembersFromCSV(String path){
+    public void addMembersFromCSV(String path, boolean skipFirstRow){
         String line = "";
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(path));
+            if (skipFirstRow) br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] m = line.split(",");
                 members.add(new Member(m[0], m[1], m[2], m[3], m[4], m[5], Float.valueOf(m[6]), Float.valueOf(m[7]), Float.valueOf(m[8]), Float.valueOf(m[9]), Float.valueOf(m[10])));
@@ -316,6 +326,67 @@ public class Division {
         }
         return false;
     }
+
+    public boolean exportTeamsToCSV(String filePath, Boolean DivisionID, Boolean TeamID, Boolean MemberID, Boolean LastName, Boolean MiddleName, Boolean FirstName, Boolean Openness, Boolean Conscientiousness, Boolean Agreeableness, Boolean Neuroticism, Boolean Extraversion){
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(filePath);
+            fw.append("DivisionID,TeamId,LastName,MiddleName,FirstName,MemberID,Conscientiousness,Extraversion,Agreeableness,Openness,Neuroticism\n");
+            for (int x = 0; x < teamOfMembers.size(); x++){
+                for (int y = 0; y < teamOfMembers.get(x).getSize(); y++) {
+                    Member m = teamOfMembers.get(x).getMember(y);
+                    if (DivisionID)
+                        fw.append(m.getDivisionID());
+                    fw.append(",");
+                    if (TeamID)
+                        fw.append(m.getTeamID());
+                    fw.append(",");
+                    if(MemberID)
+                        fw.append(m.getMemberID());
+                    fw.append(",");
+                    if (LastName)
+                        fw.append(m.getLastName());
+                    fw.append(",");
+                    if (MiddleName)
+                        fw.append(m.getMiddleName());
+                    fw.append(",");
+                    if (FirstName)
+                        fw.append(m.getFirstName());
+                    fw.append(",");
+                    if (Conscientiousness)
+                        fw.append(String.valueOf(m.getConscientiousness()));
+                    fw.append(",");
+                    if (Extraversion)
+                        fw.append(String.valueOf(m.getExtraversion()));
+                    fw.append(",");
+                    if (Agreeableness)
+                        fw.append(String.valueOf(m.getAgreeableness()));
+                    fw.append(",");
+                    if (Openness)
+                        fw.append(String.valueOf(m.getOpenness()));
+                    fw.append(",");
+                    if (Neuroticism)
+                        fw.append(String.valueOf(m.getNeuroticism()));
+                    fw.append("\n");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fw != null) {
+                try {
+                    fw.close();
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
 
     public boolean exportAllMembersToCSV(String filePath){
         FileWriter fw = null;
