@@ -10,6 +10,9 @@ public class Division {
     private String divisionID;
     private int teamSize, teamNum, extraMemberTeams;
 
+
+    // Constructors
+
     public Division(){
 
     }
@@ -42,6 +45,9 @@ public class Division {
         this.teamNum = teamNum;
     }
 
+
+    // Get/Set
+
     public ArrayList<Member> getMembers(){
         return members;
     }
@@ -70,6 +76,7 @@ public class Division {
         this.teamNum = teamNum;
     }
 
+    // return data of member with given ID
     public HashMap<String, Object> member(String memberId){
         for(int x = 0; x < teamNum; x++){
             Member tempMember = teamOfMembers.get(x).findMemberById(memberId);
@@ -101,6 +108,7 @@ public class Division {
     }
 
     public void group(boolean Simularity, boolean teamSize){
+        // Used to configure for grouping and directed to users designated function
         // if Simularity = true then group by Simularity otherwise Difference
         // if teamSize = true then grouping based on having a team size speifed, otherwise it is based on the number of teams
         if (teamSize) {
